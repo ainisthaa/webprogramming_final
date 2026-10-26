@@ -43,7 +43,7 @@ function Home() {
             aria-hidden="true"
           />
 
-          <div className="relative grid items-center gap-10 md:grid-cols-2">
+          <div className="relative grid grid-cols-1 items-center gap-10 md:grid-cols-2">
             <div>
               <p className="text-sm font-semibold tracking-widest text-indigo-200 uppercase">
                 MiniShop Dashboard

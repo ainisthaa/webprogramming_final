@@ -110,7 +110,7 @@ function ProductDetail() {
         </ol>
       </nav>
 
-      <div className="grid gap-8 lg:grid-cols-2 lg:gap-12">
+      <div className="grid grid-cols-1 gap-8 lg:grid-cols-2 lg:gap-12">
         <div className="flex h-80 items-center justify-center rounded-2xl border border-slate-200 bg-white p-8 sm:h-112">
           <ProductImage product={product} className="h-full w-full" iconClass="h-28 w-28" />
         </div>
@@ -156,7 +156,7 @@ function ProductDetail() {
             )}
           </div>
 
-          <div className="mt-6 grid gap-3 sm:grid-cols-2">
+          <div className="mt-6 grid grid-cols-1 gap-3 sm:grid-cols-2">
             <button
               type="button"
               onClick={handleAddToCart}
@@ -218,7 +218,7 @@ function ProductDetail() {
           {activeTab === 'description' && <p>{description}</p>}
 
           {activeTab === 'specifications' && (
-            <dl className="grid gap-x-8 gap-y-3 sm:grid-cols-2">
+            <dl className="grid grid-cols-1 gap-x-8 gap-y-3 sm:grid-cols-2">
               {specifications.map(([term, value]) => (
                 <div key={term} className="flex justify-between gap-4 border-b border-slate-100 pb-2">
                   <dt className="text-slate-500">{term}</dt>

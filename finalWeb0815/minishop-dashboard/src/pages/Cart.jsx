@@ -79,7 +79,7 @@ function Cart() {
           </div>
         )
       ) : (
-        <div className="mt-8 grid gap-8 lg:grid-cols-3">
+        <div className="mt-8 grid grid-cols-1 gap-8 lg:grid-cols-3">
           <div className="lg:col-span-2">
             <div className="rounded-xl border border-slate-200 bg-white shadow-sm">
               <div className="hidden gap-4 border-b border-slate-200 px-6 py-3 text-xs font-medium tracking-wide text-slate-500 uppercase sm:flex">

@@ -43,7 +43,7 @@ function About() {
           <Code className="h-5 w-5 text-indigo-600" aria-hidden="true" />
           Technologies
         </h2>
-        <ul className="mt-4 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
+        <ul className="mt-4 grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3">
           {techStack.map((item) => (
             <li
               key={item.name}

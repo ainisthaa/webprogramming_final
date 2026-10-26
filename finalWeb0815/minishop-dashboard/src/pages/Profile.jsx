@@ -92,7 +92,7 @@ function Profile() {
     <div className="mx-auto max-w-7xl px-4 py-8 motion-safe:animate-fade-in sm:px-6 lg:px-8">
       <h1 className="text-3xl font-bold text-slate-900">My Profile</h1>
 
-      <div className="mt-6 grid gap-6 lg:grid-cols-[16rem_1fr]">
+      <div className="mt-6 grid grid-cols-1 gap-6 lg:grid-cols-[16rem_1fr]">
         <aside className="h-fit rounded-xl border border-slate-200 bg-white p-6 shadow-sm lg:sticky lg:top-24">
           <div className="flex flex-col items-center text-center">
             <div
@@ -155,7 +155,7 @@ function Profile() {
               Update your personal details. Changes are saved in this browser.
             </p>
 
-            <form onSubmit={handleSubmit} noValidate className="mt-6 grid gap-4 sm:grid-cols-2">
+            <form onSubmit={handleSubmit} noValidate className="mt-6 grid grid-cols-1 gap-4 sm:grid-cols-2">
               <div>
                 <label htmlFor="profile-name" className={labelClass}>
                   Full Name

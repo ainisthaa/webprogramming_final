@@ -8,7 +8,7 @@ function InventorySummary({ products }) {
   const outOfStock = products.filter((product) => product.stock === 0).length
 
   return (
-    <div className="grid gap-4 sm:grid-cols-3">
+    <div className="grid grid-cols-1 gap-4 sm:grid-cols-3">
       <StatCard
         label="Total Products"
         value={totalProducts}

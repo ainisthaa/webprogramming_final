@@ -13,8 +13,8 @@ function OrdersTable({ orders, showCustomer = true, compact = false }) {
   }
 
   return (
-    <div className="overflow-x-auto">
-      <table className="w-full min-w-md text-left text-sm">
+    <div className="relative overflow-x-auto">
+      <table className={`w-full text-left text-sm ${compact ? 'min-w-xs' : 'min-w-md'}`}>
         <thead>
           <tr className="border-b border-slate-200 text-xs tracking-wide text-slate-500 uppercase">
             <th scope="col" className="py-2 pr-4 font-medium">

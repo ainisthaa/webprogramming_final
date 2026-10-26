@@ -6,7 +6,7 @@ function ProductFilters({ search, category, categories, onSearchChange, onCatego
   const hasFilter = search !== '' || category !== 'All'
 
   return (
-    <div className="grid gap-4 sm:grid-cols-[1fr_14rem_auto] sm:items-end">
+    <div className="grid grid-cols-1 gap-4 sm:grid-cols-[1fr_14rem_auto] sm:items-end">
       <div>
         <label htmlFor="product-search" className={labelClass}>
           Search by name
