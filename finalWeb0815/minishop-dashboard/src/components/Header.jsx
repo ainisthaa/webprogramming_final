@@ -93,7 +93,7 @@ function Header() {
           <Link
             to="/cart"
             onClick={closeMenu}
-            aria-label={`Shopping cart, ${cartCount} items`}
+            aria-label={`Shopping cart, ${cartCount} ${cartCount === 1 ? 'item' : 'items'}`}
             className={iconButton}
           >
             <ShoppingCart className="h-5 w-5" aria-hidden="true" />
