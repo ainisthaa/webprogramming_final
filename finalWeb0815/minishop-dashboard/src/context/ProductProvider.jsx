@@ -12,6 +12,7 @@ import { ProductContext, useCart } from './ShopContext'
 
 const PRODUCTS_KEY = 'minishop_products'
 const DELETED_KEY = 'minishop_deleted_ids'
+const STOCK_KEY = 'minishop_api_stock'
 
 const initialProducts = mockProducts.map(fromMock)
 
@@ -32,11 +33,24 @@ function loadDeletedIds() {
   )
 }
 
+function loadApiStock() {
+  return loadData(
+    STOCK_KEY,
+    {},
+    (data) =>
+      typeof data === 'object' &&
+      data !== null &&
+      !Array.isArray(data) &&
+      Object.values(data).every((stock) => Number.isInteger(stock) && stock >= 0),
+  )
+}
+
 function ProductProvider({ children }) {
   const { removeFromCart } = useCart()
   const [localProducts, setLocalProducts] = useState(loadLocalProducts)
   const [apiProducts, setApiProducts] = useState([])
   const [deletedIds, setDeletedIds] = useState(loadDeletedIds)
+  const [apiStock, setApiStock] = useState(loadApiStock)
   const [loading, setLoading] = useState(true)
   const [error, setError] = useState('')
   const [reloadCount, setReloadCount] = useState(0)
@@ -87,10 +101,18 @@ function ProductProvider({ children }) {
     saveData(DELETED_KEY, deletedIds)
   }, [deletedIds])
 
-  const products = useMemo(
-    () => [...localProducts, ...apiProducts.filter((product) => !deletedIds.includes(product.id))],
-    [localProducts, apiProducts, deletedIds],
-  )
+  useEffect(() => {
+    saveData(STOCK_KEY, apiStock)
+  }, [apiStock])
+
+  const products = useMemo(() => {
+    const visibleApiProducts = apiProducts
+      .filter((product) => !deletedIds.includes(product.id))
+      .map((product) =>
+        product.id in apiStock ? { ...product, stock: apiStock[product.id] } : product,
+      )
+    return [...localProducts, ...visibleApiProducts]
+  }, [localProducts, apiProducts, deletedIds, apiStock])
 
   function retryFetch() {
     setLoading(true)
@@ -123,9 +145,31 @@ function ProductProvider({ children }) {
     removeFromCart(id)
   }
 
+  function reduceStock(items) {
+    const newStock = {}
+    items.forEach((item) => {
+      const product = products.find((p) => p.id === item.id)
+      const currentStock = product ? product.stock : item.stock
+      newStock[item.id] = Math.max(currentStock - item.quantity, 0)
+    })
+
+    setLocalProducts((current) =>
+      current.map((product) =>
+        product.id in newStock ? { ...product, stock: newStock[product.id] } : product,
+      ),
+    )
+
+    const apiChanges = {}
+    Object.keys(newStock).forEach((id) => {
+      if (id.startsWith('api-')) apiChanges[id] = newStock[id]
+    })
+    setApiStock((current) => ({ ...current, ...apiChanges }))
+  }
+
   function resetProducts() {
     setLocalProducts(initialProducts)
     setDeletedIds([])
+    setApiStock({})
   }
 
   const value = {
@@ -135,6 +179,7 @@ function ProductProvider({ children }) {
     retryFetch,
     addProduct,
     deleteProduct,
+    reduceStock,
     resetProducts,
   }
 

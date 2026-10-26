@@ -12,7 +12,7 @@ const SHIPPING_FEE = 0
 
 function Cart() {
   const { cart, cartCount, subtotal, updateQuantity, removeFromCart, clearCart } = useCart()
-  const { products } = useProducts()
+  const { products, reduceStock } = useProducts()
   const { currentUser, placeOrder } = useUser()
   const [order, setOrder] = useState(null)
 
@@ -27,6 +27,7 @@ function Cart() {
 
   function handleCheckout() {
     const newOrder = placeOrder(cart, total)
+    reduceStock(cart)
     clearCart()
     setOrder(newOrder)
   }

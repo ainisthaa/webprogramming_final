@@ -44,6 +44,7 @@ Demo account: `john@example.com` / `demo1234` (or click "Continue with demo acco
   keeps working with the mock products.
 - The API has no stock field, so API products get a simulated stock:
   `0` if `id % 7 === 0`, otherwise `(id * 13) % 20 + 1`.
+- Checkout reduces the stock of every product in the cart, so the summary cards update too.
 - Added products, deleted products, cart, users, orders and the login session are saved in
   localStorage. Admin > Settings has a button to reset all demo data.
 - Orders, revenue, users and the sales chart are demo data. There is no real backend or payment.
