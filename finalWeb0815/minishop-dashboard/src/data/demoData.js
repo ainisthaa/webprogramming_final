@@ -50,24 +50,3 @@ export const demoOrders = [
   { id: 119, userId: 'user-1', customer: 'John Doe', date: '2026-10-10', items: 2, total: 79.99, status: 'Delivered' },
   { id: 118, userId: 'user-1', customer: 'John Doe', date: '2026-09-28', items: 1, total: 48, status: 'Delivered' },
 ]
-
-export const weeklySales = {
-  thisWeek: [
-    { day: 'Mon', sales: 240 },
-    { day: 'Tue', sales: 310 },
-    { day: 'Wed', sales: 280 },
-    { day: 'Thu', sales: 420 },
-    { day: 'Fri', sales: 390 },
-    { day: 'Sat', sales: 560 },
-    { day: 'Sun', sales: 720 },
-  ],
-  lastWeek: [
-    { day: 'Mon', sales: 310 },
-    { day: 'Tue', sales: 260 },
-    { day: 'Wed', sales: 350 },
-    { day: 'Thu', sales: 300 },
-    { day: 'Fri', sales: 450 },
-    { day: 'Sat', sales: 410 },
-    { day: 'Sun', sales: 520 },
-  ],
-}

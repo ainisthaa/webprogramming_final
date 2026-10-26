@@ -47,7 +47,8 @@ Demo account: `john@example.com` / `demo1234` (or click "Continue with demo acco
 - Checkout reduces the stock of every product in the cart, so the summary cards update too.
 - Added products, deleted products, cart, users, orders and the login session are saved in
   localStorage. Admin > Settings has a button to reset all demo data.
-- Orders, revenue, users and the sales chart are demo data. There is no real backend or payment.
+- Orders and users are demo data (sample orders + orders from the demo checkout). Total revenue
+  and the sales chart are calculated from these orders. There is no real backend or payment.
 
 ## Folder structure
 

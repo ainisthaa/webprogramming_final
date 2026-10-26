@@ -7,12 +7,12 @@ import PageHeader from '../../components/PageHeader'
 import ProductImage from '../../components/ProductImage'
 import StatCard from '../../components/StatCard'
 import { useProducts, useUser } from '../../context/ShopContext'
-import { weeklySales } from '../../data/demoData'
 import { formatPrice } from '../../utils/format'
+import { addDays, getDailySales, getLatestOrderDate, getPeriodLabel } from '../../utils/sales'
 
 const SalesChart = lazy(() => import('../../components/SalesChart'))
 
-const today =new Date().toLocaleDateString('en-GB', {
+const today = new Date().toLocaleDateString('en-GB', {
   day: 'numeric',
   month: 'short',
   year: 'numeric',
@@ -24,9 +24,13 @@ const linkClass =
 function AdminDashboard() {
   const { products, loading, error } = useProducts()
   const { orders, users } = useUser()
-  const [week, setWeek] = useState('thisWeek')
+  const [period, setPeriod] = useState('last7')
 
   const revenue = orders.reduce((sum, order) => sum + order.total, 0)
+  const latestDate = getLatestOrderDate(orders)
+  const endDate = period === 'last7' ? latestDate : addDays(latestDate, -7)
+  const dailySales = getDailySales(orders, endDate)
+  const periodTotal = dailySales.reduce((sum, item) => sum + item.sales, 0)
   const topProducts = products
     .filter((product) => product.rating.count > 0)
     .sort((a, b) => b.rating.rate - a.rating.rate)
@@ -96,20 +100,26 @@ function AdminDashboard() {
               <h2 id="sales-title" className="font-semibold text-slate-900">
                 Sales Overview
               </h2>
-              <p className="text-xs text-slate-500">Demo data</p>
+              <p className="text-xs text-slate-500">
+                Daily order totals, {getPeriodLabel(endDate)}
+              </p>
             </div>
             <label>
-              <span className="sr-only">Choose week</span>
+              <span className="sr-only">Choose period</span>
               <select
-                value={week}
-                onChange={(event) => setWeek(event.target.value)}
+                value={period}
+                onChange={(event) => setPeriod(event.target.value)}
                 className="rounded-lg border border-slate-300 bg-white px-3 py-1.5 text-sm text-slate-700 focus:border-indigo-500 focus:ring-2 focus:ring-indigo-200 focus:outline-none"
               >
-                <option value="thisWeek">This Week</option>
-                <option value="lastWeek">Last Week</option>
+                <option value="last7">Last 7 Days</option>
+                <option value="previous7">Previous 7 Days</option>
               </select>
             </label>
           </div>
+          <p className="mb-2 text-sm text-slate-600">
+            Total in this period:{' '}
+            <span className="font-semibold text-slate-900">{formatPrice(periodTotal)}</span>
+          </p>
           <Suspense
             fallback={
               <div className="flex h-64 items-center justify-center text-sm text-slate-500">
@@ -117,7 +127,7 @@ function AdminDashboard() {
               </div>
             }
           >
-            <SalesChart data={weeklySales[week]} />
+            <SalesChart data={dailySales} />
           </Suspense>
         </section>
 
